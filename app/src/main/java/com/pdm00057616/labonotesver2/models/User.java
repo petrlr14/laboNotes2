@@ -2,11 +2,8 @@ package com.pdm00057616.labonotesver2.models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
-
-import java.util.List;
 
 @Entity
 public class User {
@@ -16,12 +13,24 @@ public class User {
     @ColumnInfo(name = "username")
     private String username;
 
-    public User(@NonNull String username) {
+    @ColumnInfo(name = "logged")
+    private int isLogged;
+
+    public User(@NonNull String username, int isLogged) {
         this.username = username;
+        this.isLogged=isLogged;
     }
 
     @NonNull
     public String getUsername() {
         return username;
+    }
+
+    public int getIsLogged() {
+        return isLogged;
+    }
+
+    public void setIsLogged(int isLogged) {
+        this.isLogged = isLogged;
     }
 }
