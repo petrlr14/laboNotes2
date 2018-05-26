@@ -15,10 +15,16 @@ public interface UserDao {
     @Insert
     void insert(User user);
 
-    @Query("SELECT*FROM User WHERE username like (:name)")
-    User getUser(String name);
+    @Query("SELECT*FROM User WHERE logged=1")
+    LiveData<User> getUser();
 
     @Query("SELECT*FROM User")
     LiveData<List<User>> getAllUsers();
+
+    @Query("UPDATE User SET logged=0 WHERE username = :username")
+    void setLogout(String username);
+
+    @Query("UPDATE User SET logged=1 WHERE username like (:username)")
+    void setLogin(String username);
 
 }
