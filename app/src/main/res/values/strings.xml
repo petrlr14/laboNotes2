@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">LaboNotesVer2</string>
+    <string name="app_name">Labo Notes </string>
+    <string name="sticky_notes_description">sticky notes</string>
+    <string name="account_title">Account</string>
+    <string name="notes_title">Notes</string>
+    <string name="add_note_title">Add note</string>
+    <string name="add_category_title">Add category</string>
 </resources>
