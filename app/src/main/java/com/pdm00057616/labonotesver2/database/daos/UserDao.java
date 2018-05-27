@@ -27,4 +27,6 @@ public interface UserDao {
     @Query("UPDATE User SET logged=1 WHERE username like (:username)")
     void setLogin(String username);
 
+    @Query("SELECT*FROM User WHERE username LIKE :username")
+    User getUserByUsername(String username);
 }
