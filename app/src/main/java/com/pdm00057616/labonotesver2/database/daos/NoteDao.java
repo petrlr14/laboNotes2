@@ -20,4 +20,7 @@ public interface NoteDao {
 
     @Query("SELECT*FROM Note WHERE id=(:id)")
     Note getNotesByID(int id);
+
+    @Query("SELECT*FROM Note WHERE category_id=(:id)")
+    LiveData<List<Note>> getNotesByCategory(int id);
 }
