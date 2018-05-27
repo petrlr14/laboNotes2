@@ -8,7 +8,7 @@ import android.arch.persistence.room.PrimaryKey;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-@Entity(indices = {@Index("user_id")},
+@Entity(indices = {@Index("user_id"), @Index("category_id")},
         foreignKeys = {
                 @ForeignKey(entity = User.class,
                         parentColumns = "username",

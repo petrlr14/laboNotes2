@@ -13,7 +13,7 @@ import com.pdm00057616.labonotesver2.models.Note;
 import com.pdm00057616.labonotesver2.models.User;
 
 @Database(entities = {User.class, Note.class, Category.class},
-        exportSchema = false, version = 2)
+        exportSchema = false, version = 3)
 public abstract class DB extends RoomDatabase{
 
     private static volatile DB db;
