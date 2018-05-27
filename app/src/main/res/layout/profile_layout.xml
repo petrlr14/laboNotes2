@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/image_view_account"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:contentDescription="@string/user_image_description"
+        android:src="@drawable/ic_account_24dp" />
+
+    <TextView
+        android:id="@+id/text_view_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_view_account"
+        android:layout_centerHorizontal="true"
+        android:textSize="24sp" />
+
+    <LinearLayout
+        android:layout_marginTop="24dp"
+        android:layout_below="@id/text_view_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Notes count:"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/notes_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Categories"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/category_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+</RelativeLayout>
