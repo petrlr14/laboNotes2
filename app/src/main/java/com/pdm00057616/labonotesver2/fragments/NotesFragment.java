@@ -1,7 +1,9 @@
 package com.pdm00057616.labonotesver2.fragments;
 
+import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,11 +28,13 @@ public class NotesFragment extends Fragment {
     private NoteViewModel noteViewModel;
     private NotesRecyclerView adapter;
     private Context context;
+    private Activity activity;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context=getContext();
+        activity=getActivity();
     }
 
     @Nullable
@@ -41,11 +45,17 @@ public class NotesFragment extends Fragment {
         viewPager=view.findViewById(R.id.view_pager);*/
         adapter=new NotesRecyclerView();
         noteViewModel= ViewModelProviders.of(this).get(NoteViewModel.class);
-        noteViewModel.getNotesByUser("").observe(this, adapter::setNotes);
+        noteViewModel.getNotesByUser(setUsername()).observe(this, adapter::setNotes);
         recyclerView=view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         return view;
+    }
+
+
+    private String setUsername(){
+        SharedPreferences preferences=activity.getPreferences(Context.MODE_PRIVATE);
+        return preferences.getString(getString(R.string.login_token), "");
     }
 
 }
