@@ -5,4 +5,8 @@
     <string name="notes_title">Notes</string>
     <string name="add_note_title">Add note</string>
     <string name="add_category_title">Add category</string>
+    <string name="enter_your_note_hint">Enter your note</string>
+    <string name="title_hint">Title</string>
+    <string name="done_button">DONE</string>
+    <string name="user_image_description">user_image</string>
 </resources>
