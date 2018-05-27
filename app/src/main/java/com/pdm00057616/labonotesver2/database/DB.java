@@ -13,7 +13,7 @@ import com.pdm00057616.labonotesver2.models.Note;
 import com.pdm00057616.labonotesver2.models.User;
 
 @Database(entities = {User.class, Note.class, Category.class},
-        exportSchema = false, version = 1)
+        exportSchema = false, version = 2)
 public abstract class DB extends RoomDatabase{
 
     private static volatile DB db;
@@ -28,7 +28,7 @@ public abstract class DB extends RoomDatabase{
 
     private static DB create(Context context){
         return Room.databaseBuilder(context,
-                DB.class, DB_NAME).build();
+                DB.class, DB_NAME).fallbackToDestructiveMigration().build();
     }
 
     public abstract UserDao userDao();
