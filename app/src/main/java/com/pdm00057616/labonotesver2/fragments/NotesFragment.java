@@ -54,7 +54,7 @@ public class NotesFragment extends Fragment {
 
 
     private String setUsername(){
-        SharedPreferences preferences=activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences preferences=activity.getSharedPreferences("log", Context.MODE_PRIVATE);
         return preferences.getString(getString(R.string.login_token), "");
     }
 

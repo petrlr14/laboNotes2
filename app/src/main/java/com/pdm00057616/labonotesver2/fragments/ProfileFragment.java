@@ -30,8 +30,7 @@ public class ProfileFragment extends Fragment {
     private UserViewModel userViewModel;
     private ImageView imageView;
     private TextView textViewNoteCount, textViewCategoryCount, textViewUsername;
-    private List<Category> allCategories;
-/*para sharedpreferences*/    private Activity activity;
+    private Activity activity;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,7 +49,7 @@ public class ProfileFragment extends Fragment {
         textViewUsername.setText(getUsername());
         categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
         noteViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
-        noteViewModel.getNotesByUser("holi").observe(this, (notes) -> {
+        noteViewModel.getNotesByUser(getUsername()).observe(this, (notes) -> {
             String aux = notes == null ? "0" : notes.size() + "";
             textViewNoteCount.setText(aux);
         });

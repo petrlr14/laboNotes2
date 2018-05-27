@@ -25,8 +25,9 @@ public class NotesRecyclerView extends RecyclerView.Adapter<NotesRecyclerView.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Note aux = notes.get(position);
+        System.out.println(aux.getCategoryID());
         holder.textViewTitle.setText(aux.getTitle());
-        holder.textViewCategory.setText(aux.getCategoryID());
+        holder.textViewCategory.setText(aux.getCategoryID()+"");
     }
 
     @Override
