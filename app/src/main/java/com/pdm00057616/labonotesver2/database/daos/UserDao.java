@@ -29,4 +29,7 @@ public interface UserDao {
 
     @Query("SELECT*FROM User WHERE username LIKE :username")
     User getUserByUsername(String username);
+
+    @Query("DELETE FROM User")
+    void nuke();
 }
