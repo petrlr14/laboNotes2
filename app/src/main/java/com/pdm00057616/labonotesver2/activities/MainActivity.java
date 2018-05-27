@@ -1,6 +1,8 @@
 package com.pdm00057616.labonotesver2.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.pdm00057616.labonotesver2.R;
+import com.pdm00057616.labonotesver2.database.repositories.UserRepository;
+import com.pdm00057616.labonotesver2.fragments.AddCategoryFragment;
 import com.pdm00057616.labonotesver2.fragments.AddNoteFragment;
 import com.pdm00057616.labonotesver2.fragments.NotesFragment;
 import com.pdm00057616.labonotesver2.fragments.ProfileFragment;
@@ -20,11 +24,17 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private SharedPreferences preferences;
+    private UserRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*repository=new UserRepository(getApplication());
+        repository.nukeTable();*/
         setContentView(R.layout.activity_main);
+        preferences=this.getSharedPreferences("log", Context.MODE_PRIVATE);
+        isLogged();
         bindViews();
     }
 
@@ -58,6 +68,13 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.add_note_section:
                             type=2;
                             break;
+                        case R.id.add_category_section:
+                            type=3;
+                            break;
+                        case R.id.logout_section:
+                            logout();
+                            drawerLayout.closeDrawers();
+                            return true;
                     }
                     getSupportFragmentManager().beginTransaction().
                             replace(R.id.main_content, setFragment(type)).
@@ -77,7 +94,27 @@ public class MainActivity extends AppCompatActivity {
                 return new NotesFragment();
             case 2:
                 return new AddNoteFragment();
+            case 3:
+                return new AddCategoryFragment();
         }
         return null;
+    }
+
+    private void logout(){
+        SharedPreferences preferences=this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferences.edit();
+        editor.clear();
+        editor.apply();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    private void isLogged(){
+        if(!preferences.contains(getString(R.string.login_token))){
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
     }
 }
