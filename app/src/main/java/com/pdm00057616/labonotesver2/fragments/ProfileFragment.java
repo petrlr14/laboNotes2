@@ -2,6 +2,8 @@ package com.pdm00057616.labonotesver2.fragments;
 
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,9 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pdm00057616.labonotesver2.R;
+import com.pdm00057616.labonotesver2.database.repositories.UserRepository;
 import com.pdm00057616.labonotesver2.models.Category;
 import com.pdm00057616.labonotesver2.viewmodels.CategoryViewModel;
 import com.pdm00057616.labonotesver2.viewmodels.NoteViewModel;
+import com.pdm00057616.labonotesver2.viewmodels.UserViewModel;
 
 import java.util.List;
 
@@ -23,8 +27,9 @@ public class ProfileFragment extends Fragment {
 
     private CategoryViewModel categoryViewModel;
     private NoteViewModel noteViewModel;
+    private UserViewModel userViewModel;
     private ImageView imageView;
-    private TextView textViewNoteCount, textViewCategoryCount;
+    private TextView textViewNoteCount, textViewCategoryCount, textViewUsername;
     private List<Category> allCategories;
 /*para sharedpreferences*/    private Activity activity;
 
@@ -41,6 +46,8 @@ public class ProfileFragment extends Fragment {
         imageView = view.findViewById(R.id.image_view_account);
         textViewNoteCount = view.findViewById(R.id.notes_count);
         textViewCategoryCount = view.findViewById(R.id.category_count);
+        textViewUsername=view.findViewById(R.id.text_view_username);
+        textViewUsername.setText(getUsername());
         categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
         noteViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
         noteViewModel.getNotesByUser("holi").observe(this, (notes) -> {
@@ -54,5 +61,9 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    private String getUsername(){
+        SharedPreferences preferences=activity.getSharedPreferences("log", Context.MODE_PRIVATE);
+        return preferences.getString(getString(R.string.login_token), "");
+    }
 
 }
