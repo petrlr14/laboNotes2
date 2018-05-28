@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                             replace(R.id.main_content, setFragment(type)).
                             commit();
                     drawerLayout.closeDrawers();
+                    getSupportActionBar().setTitle(item.getTitle());
                     return true;
                 }
         );
