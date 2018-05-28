@@ -27,7 +27,6 @@ public class ProfileFragment extends Fragment {
 
     private CategoryViewModel categoryViewModel;
     private NoteViewModel noteViewModel;
-    private UserViewModel userViewModel;
     private ImageView imageView;
     private TextView textViewNoteCount, textViewCategoryCount, textViewUsername;
     private Activity activity;

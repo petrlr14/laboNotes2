@@ -36,7 +36,6 @@ public class NotesFragment extends Fragment {
     private CategoryViewModel categoryViewModel;
     private Context context;
     private Activity activity;
-    private List<Fragment> fragmentList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,7 +48,6 @@ public class NotesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.note_layout, container, false);
-        fragmentList=new ArrayList<>();
         tabLayout=view.findViewById(R.id.tab_layout);
         viewPager=view.findViewById(R.id.view_pager);
         categoryViewModel=ViewModelProviders.of(this).get(CategoryViewModel.class);
