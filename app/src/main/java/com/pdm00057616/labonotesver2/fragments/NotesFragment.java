@@ -18,17 +18,25 @@ import android.view.ViewGroup;
 
 import com.pdm00057616.labonotesver2.R;
 import com.pdm00057616.labonotesver2.adapters.NotesRecyclerView;
+import com.pdm00057616.labonotesver2.adapters.ViewPagerAdapter;
+import com.pdm00057616.labonotesver2.models.Category;
+import com.pdm00057616.labonotesver2.viewmodels.CategoryViewModel;
 import com.pdm00057616.labonotesver2.viewmodels.NoteViewModel;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class NotesFragment extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private RecyclerView recyclerView;
-    private NoteViewModel noteViewModel;
-    private NotesRecyclerView adapter;
+    private ViewPagerAdapter adapter;
+    private CategoryViewModel categoryViewModel;
     private Context context;
     private Activity activity;
+    private List<Fragment> fragmentList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,21 +49,33 @@ public class NotesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.note_layout, container, false);
-        /*tabLayout=view.findViewById(R.id.tab_layout);
-        viewPager=view.findViewById(R.id.view_pager);*/
-        adapter=new NotesRecyclerView();
-        noteViewModel= ViewModelProviders.of(this).get(NoteViewModel.class);
-        noteViewModel.getNotesByUser(setUsername()).observe(this, adapter::setNotes);
-        recyclerView=view.findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        fragmentList=new ArrayList<>();
+        tabLayout=view.findViewById(R.id.tab_layout);
+        viewPager=view.findViewById(R.id.view_pager);
+        categoryViewModel=ViewModelProviders.of(this).get(CategoryViewModel.class);
+        adapter=new ViewPagerAdapter(getChildFragmentManager());
+        categoryViewModel.getAllCategory().observe(this, this::addFragments);
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
         return view;
     }
+
+    private void addFragments(List<Category> categories){
+        System.out.println(categories.size());
+        for(int i=0; i<categories.size(); i++){
+            NotesByCategoryFragment fragment=new NotesByCategoryFragment();
+            fragment.setResctriction(i+1);
+            adapter.addFragment(fragment, categories.get(i).getName());
+        }
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+        System.out.println(adapter.getCount()+"cuenta");
+    }
+
 
 
     private String setUsername(){
         SharedPreferences preferences=activity.getSharedPreferences("log", Context.MODE_PRIVATE);
         return preferences.getString(getString(R.string.login_token), "");
     }
-
 }
