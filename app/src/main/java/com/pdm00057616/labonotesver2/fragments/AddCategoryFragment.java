@@ -31,6 +31,7 @@ public class AddCategoryFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity=getActivity();
+        context=getContext();
     }
 
     @Nullable
