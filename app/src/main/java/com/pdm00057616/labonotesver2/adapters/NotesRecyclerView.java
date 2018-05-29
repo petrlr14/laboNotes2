@@ -12,7 +12,7 @@ import com.pdm00057616.labonotesver2.models.Note;
 
 import java.util.List;
 
-public class NotesRecyclerView extends RecyclerView.Adapter<NotesRecyclerView.ViewHolder> {
+public abstract class NotesRecyclerView extends RecyclerView.Adapter<NotesRecyclerView.ViewHolder> {
 
     private List<Note> notes;
 
@@ -25,9 +25,8 @@ public class NotesRecyclerView extends RecyclerView.Adapter<NotesRecyclerView.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Note aux = notes.get(position);
-        System.out.println(aux.getCategoryID());
+        holder.position=holder.getAdapterPosition();
         holder.textViewTitle.setText(aux.getTitle());
-        holder.textViewCategory.setText(aux.getCategoryID()+"");
     }
 
     @Override
@@ -43,12 +42,15 @@ public class NotesRecyclerView extends RecyclerView.Adapter<NotesRecyclerView.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView textViewTitle, textViewCategory;
+        private TextView textViewTitle;
+        private int position;
 
         public ViewHolder(View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.text_view_title);
-            textViewCategory = itemView.findViewById(R.id.text_view_category);
+            itemView.setOnClickListener((v)->onClickAction(position));
         }
     }
+
+    public abstract void onClickAction(int position);
 }

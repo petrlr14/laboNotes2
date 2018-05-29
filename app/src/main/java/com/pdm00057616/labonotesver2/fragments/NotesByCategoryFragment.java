@@ -3,6 +3,7 @@ package com.pdm00057616.labonotesver2.fragments;
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pdm00057616.labonotesver2.R;
+import com.pdm00057616.labonotesver2.activities.NoteViewActivity;
 import com.pdm00057616.labonotesver2.adapters.NotesRecyclerView;
 import com.pdm00057616.labonotesver2.models.Category;
 import com.pdm00057616.labonotesver2.models.Note;
@@ -30,14 +32,18 @@ public class NotesByCategoryFragment extends Fragment {
     private NotesRecyclerView adapter;
     private Context context;
     private Activity activity;
-    private List<Note> notes;
+    private String category;
     private int resctriction=-1;
+    private List<Note> aux;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getContext();
         activity = getActivity();
+        if(getArguments()!=null){
+            category=getArguments().getString("category");
+        }
     }
 
     @Nullable
@@ -45,7 +51,12 @@ public class NotesByCategoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pager_layout, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
-        adapter = new NotesRecyclerView();
+        adapter = new NotesRecyclerView() {
+            @Override
+            public void onClickAction(int position) {
+                setValues(position);
+            }
+        };
         noteViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
         noteViewModel.getNotesByUser(setUsername()).observe(this, this::updateList);
         recyclerView = view.findViewById(R.id.recycler_view);
@@ -56,6 +67,7 @@ public class NotesByCategoryFragment extends Fragment {
 
     private void updateList(List<Note>notes){
         List<Note> aux=new ArrayList<>();
+        this.aux=new ArrayList<>();
         if(resctriction!=-1){
             for(Note x: notes){
                 if(x.getCategoryID()==resctriction){
@@ -63,7 +75,7 @@ public class NotesByCategoryFragment extends Fragment {
                 }
             }
         }
-        System.out.println(aux.size()+"tamaño");
+        this.aux=aux;
         adapter.setNotes(aux);
     }
 
@@ -76,4 +88,13 @@ public class NotesByCategoryFragment extends Fragment {
         return preferences.getString(getString(R.string.login_token), "");
     }
 
+    private void setValues(int position){
+        ArrayList<String> aux=new ArrayList<>();
+        aux.add(this.aux.get(position).getTitle());
+        aux.add(category);
+        aux.add(this.aux.get(position).getText());
+        Intent intent=new Intent(context, NoteViewActivity.class);
+        intent.putExtra("data", aux);
+        startActivity(intent);
+    }
 }

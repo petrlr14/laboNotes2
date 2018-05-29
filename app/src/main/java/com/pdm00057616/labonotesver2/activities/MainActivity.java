@@ -30,12 +30,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*repository=new UserRepository(getApplication());
-        repository.nukeTable();*/
         setContentView(R.layout.activity_main);
         preferences=this.getSharedPreferences("log", Context.MODE_PRIVATE);
         isLogged();
         bindViews();
+        setFirstView();
     }
 
     @Override
@@ -80,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                             replace(R.id.main_content, setFragment(type)).
                             commit();
                     drawerLayout.closeDrawers();
+                    item.setChecked(true);
                     getSupportActionBar().setTitle(item.getTitle());
                     return true;
                 }
@@ -102,13 +102,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logout(){
-        SharedPreferences preferences=this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences preferences=this.getSharedPreferences("log", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=preferences.edit();
         editor.clear();
         editor.apply();
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        finish();
     }
 
     private void isLogged(){
@@ -116,6 +117,16 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            finish();
         }
+    }
+
+    private void setFirstView(){
+        navigationView.getMenu().getItem(0).setChecked(true);
+        Fragment fragment = new ProfileFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_content, fragment)
+                .commit();
+        getSupportActionBar().setTitle(navigationView.getMenu().getItem(0).getTitle());
     }
 }

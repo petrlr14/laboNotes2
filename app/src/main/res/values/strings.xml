@@ -12,4 +12,7 @@
     <string name="username_hint">username</string>
     <string name="enter_button">enter</string>
     <string name="login_token">logged</string>
+    <string name="category_text_view">Category:</string>
+    <string name="notes_count_text_view">Notes count:</string>
+    <string name="categories_text_view">Categories:</string>
 </resources>

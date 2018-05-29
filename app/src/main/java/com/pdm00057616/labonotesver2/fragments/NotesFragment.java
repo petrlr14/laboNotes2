@@ -59,11 +59,14 @@ public class NotesFragment extends Fragment {
     }
 
     private void addFragments(List<Category> categories){
-        System.out.println(categories.size());
         for(int i=0; i<categories.size(); i++){
-            NotesByCategoryFragment fragment=new NotesByCategoryFragment();
+            String categoryName=categories.get(i).getName();
+            NotesByCategoryFragment fragment= new NotesByCategoryFragment();
+            Bundle bundle=new Bundle();
+            bundle.putString("category", categoryName);
+            fragment.setArguments(bundle);
             fragment.setResctriction(i+1);
-            adapter.addFragment(fragment, categories.get(i).getName());
+            adapter.addFragment(fragment, categoryName);
         }
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
